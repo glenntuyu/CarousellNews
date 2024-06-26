@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SortBottomSheetFragment: BottomSheetDialogFragment(), SortBottomSheetListener {
 
     private var viewBinding: FragmentSortBottomSheetBinding? = null
-
-    private var currentSort = Constant.RECENT
+    private val viewModel: SortBottomSheetViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +44,18 @@ class SortBottomSheetFragment: BottomSheetDialogFragment(), SortBottomSheetListe
 
         handleArgs()
         initRecyclerView()
+        observeViewModel()
     }
 
     private fun handleArgs() {
         val safeArgs: SortBottomSheetFragmentArgs by navArgs()
-        currentSort = safeArgs.currentSort
+        viewModel.setCurrentSort(safeArgs.currentSort)
     }
 
     private fun initRecyclerView() {
         viewBinding?.sortBottomSheetRecyclerView?.let { rv ->
             val adapter = SortBottomSheetAdapter(this)
-            adapter.setCurrentSort(currentSort)
+            adapter.setCurrentSort(viewModel.getCurrentSort())
 
             rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             rv.adapter = adapter
@@ -64,8 +65,14 @@ class SortBottomSheetFragment: BottomSheetDialogFragment(), SortBottomSheetListe
         }
     }
 
+    private fun observeViewModel() {
+        viewModel.sortLiveData.observe(this) { sort ->
+            val action = SortBottomSheetFragmentDirections.moveToNews(sort)
+            findNavController().navigate(action)
+        }
+    }
+
     override fun onItemClick(sort: String) {
-        val action = SortBottomSheetFragmentDirections.moveToNews(sort)
-        findNavController().navigate(action)
+        viewModel.setSortType(sort)
     }
 }
