@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.adapterdelegate)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
