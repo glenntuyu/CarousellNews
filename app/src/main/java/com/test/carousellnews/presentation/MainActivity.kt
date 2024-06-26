@@ -3,8 +3,6 @@ package com.test.carousellnews.presentation
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(viewBinding?.mainActivityToolbar)
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.main_fragment) as NavHostFragment? ?: return

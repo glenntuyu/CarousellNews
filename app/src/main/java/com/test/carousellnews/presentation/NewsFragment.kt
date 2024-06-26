@@ -63,6 +63,7 @@ class NewsFragment : Fragment() {
     private fun initRecyclerView() {
         viewBinding?.newsRecyclerView?.let { rv ->
             adapter = NewsAdapter()
+            rv.addItemDecoration(NewsCardItemDecoration(requireContext(), R.dimen.dp_8))
             rv.adapter = adapter
         }
     }

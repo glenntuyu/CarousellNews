@@ -17,7 +17,7 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         app:cardCornerRadius="@dimen/dp_6"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/news_card_layout"
