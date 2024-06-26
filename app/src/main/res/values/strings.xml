@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CarousellNews</string>
     <string name="news_title">Carousell News</string>
+    <string name="sort">Sort</string>
 </resources>

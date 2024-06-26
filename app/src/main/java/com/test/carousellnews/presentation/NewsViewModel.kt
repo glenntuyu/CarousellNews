@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.test.adapterdelegate.common.error.ErrorDataView
 import com.test.carousellnews.data.model.NewsResponseModel
 import com.test.carousellnews.domain.GetNewsUseCase
+import com.test.carousellnews.presentation.view.NewsCardDataView
 import com.test.carousellnews.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class NewsViewModel @Inject constructor(
     private val getNewsUseCase: GetNewsUseCase,
 ): ViewModel() {
+
+    var currentSort = Constant.RECENT
 
     private val listData = mutableListOf<Any>()
 
@@ -51,7 +54,16 @@ class NewsViewModel @Inject constructor(
     }
 
     private fun addNewsToListData(list: List<NewsResponseModel>) {
-        listData.addAll(list.toListNewsCardDataView())
+        val newList = list.toListNewsCardDataView().sort(currentSort)
+        listData.addAll(newList)
+    }
+
+    private fun List<NewsCardDataView>.sort(sort: String): List<NewsCardDataView> {
+        return if (sort == Constant.POPULAR) {
+            this.sortedBy { it.rank }
+        } else {
+            this.sortedBy { it.timeCreated }
+        }
     }
 
     private fun updateIsRefreshing(isRefreshing: Boolean) {
