@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(viewBinding?.mainActivityToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.main_fragment) as NavHostFragment? ?: return

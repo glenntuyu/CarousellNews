@@ -16,8 +16,18 @@
             android:id="@+id/main_activity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/red_2"
-            app:title="@string/news_title" />
+            android:background="@color/red_2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.TextHeader"
+                android:id="@+id/main_activity_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_16"
+                android:maxLines="1"
+                android:text="@string/news_title"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_fragment"
