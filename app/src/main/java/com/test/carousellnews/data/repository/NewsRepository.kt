@@ -6,5 +6,5 @@ import com.test.carousellnews.data.model.NewsResponseModel
  * Created by glenntuyu on 26/06/2024.
  */
 interface NewsRepository {
-    suspend fun getNews(page: Int): List<NewsResponseModel>
+    suspend fun getNews(param: String): List<NewsResponseModel>
 }

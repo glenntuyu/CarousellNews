@@ -113,7 +113,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun getNews() {
-        viewModel.getNews()
+        viewModel.getNews(viewModel.currentSort)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

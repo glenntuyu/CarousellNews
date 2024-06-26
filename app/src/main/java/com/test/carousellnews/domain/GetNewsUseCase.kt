@@ -9,9 +9,9 @@ import javax.inject.Inject
  */
 class GetNewsUseCase @Inject constructor(
     private val repository: NewsRepository,
-): UseCase<List<NewsResponseModel>, Int>() {
+): UseCase<List<NewsResponseModel>, String>() {
 
-    override suspend fun executeOnBackground(param: Int): List<NewsResponseModel> {
+    override suspend fun executeOnBackground(param: String): List<NewsResponseModel> {
         return repository.getNews(param)
     }
 }

@@ -30,11 +30,11 @@ class NewsViewModel @Inject constructor(
     private val isRefreshingMutableLiveData = MutableLiveData(false)
     val isRefreshingLiveData: LiveData<Boolean> = isRefreshingMutableLiveData
 
-    fun getNews() {
+    fun getNews(sort: String) {
         getNewsUseCase.execute(
             ::onGetNewsSuccess,
             ::onGetNewsFailed,
-            1
+            sort
         )
     }
 
@@ -54,16 +54,8 @@ class NewsViewModel @Inject constructor(
     }
 
     private fun addNewsToListData(list: List<NewsResponseModel>) {
-        val newList = list.toListNewsCardDataView().sort(currentSort)
+        val newList = list.toListNewsCardDataView()
         listData.addAll(newList)
-    }
-
-    private fun List<NewsCardDataView>.sort(sort: String): List<NewsCardDataView> {
-        return if (sort == Constant.POPULAR) {
-            this.sortedBy { it.rank }
-        } else {
-            this.sortedBy { it.timeCreated }
-        }
     }
 
     private fun updateIsRefreshing(isRefreshing: Boolean) {
@@ -90,7 +82,7 @@ class NewsViewModel @Inject constructor(
         resetState()
         updateListLiveData()
         updateIsRefreshing(true)
-        getNews()
+        getNews(currentSort)
     }
 
     private fun resetState() {
