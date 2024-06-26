@@ -9,7 +9,7 @@ import com.test.carousellnews.data.model.NewsResponseModel
 class NewsRepositoryImpl(
     private val carousellService: CarousellService,
 ): NewsRepository {
-    override suspend fun getNews(): List<NewsResponseModel> {
+    override suspend fun getNews(page: Int): List<NewsResponseModel> {
         return carousellService.getNews()
     }
 }
