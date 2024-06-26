@@ -9,5 +9,22 @@
         android:background="@color/white"
         tools:context=".presentation.NewsFragment">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/news_swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                app:layoutManager="LinearLayoutManager"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
