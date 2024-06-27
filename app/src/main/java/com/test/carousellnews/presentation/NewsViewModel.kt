@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.test.adapterdelegate.common.error.ErrorDataView
+import com.test.adapterdelegate.common.loadingpage.LoadingPageDataView
 import com.test.carousellnews.data.model.NewsResponseModel
 import com.test.carousellnews.domain.GetNewsUseCase
-import com.test.carousellnews.presentation.view.NewsCardDataView
 import com.test.carousellnews.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,7 +30,25 @@ class NewsViewModel @Inject constructor(
     private val isRefreshingMutableLiveData = MutableLiveData(false)
     val isRefreshingLiveData: LiveData<Boolean> = isRefreshingMutableLiveData
 
-    fun getNews(sort: String) {
+    fun getInitialNews(sort: String) {
+        loadData()
+        getNews(sort)
+    }
+
+    private fun loadData() {
+        addLoadingPage()
+        updateListLiveData()
+    }
+
+    private fun addLoadingPage() {
+        listData.add(LoadingPageDataView())
+    }
+
+    private fun updateListLiveData() {
+        listMutableLiveData.value = listData
+    }
+
+    private fun getNews(sort: String) {
         getNewsUseCase.execute(
             ::onGetNewsSuccess,
             ::onGetNewsFailed,
@@ -39,9 +57,14 @@ class NewsViewModel @Inject constructor(
     }
 
     private fun onGetNewsSuccess(list: List<NewsResponseModel>) {
+        clearListData()
         handleData(list)
         updateIsRefreshing(false)
         updateListLiveData()
+    }
+
+    private fun clearListData() {
+        listData.clear()
     }
 
     private fun handleData(list: List<NewsResponseModel>) {
@@ -60,10 +83,6 @@ class NewsViewModel @Inject constructor(
 
     private fun updateIsRefreshing(isRefreshing: Boolean) {
         isRefreshingMutableLiveData.postValue(isRefreshing)
-    }
-
-    private fun updateListLiveData() {
-        listMutableLiveData.value = listData
     }
 
     private fun onGetNewsFailed(throwable: Throwable) {
@@ -87,10 +106,6 @@ class NewsViewModel @Inject constructor(
 
     private fun resetState() {
         clearListData()
-    }
-
-    private fun clearListData() {
-        listData.clear()
     }
 
 }
