@@ -16,7 +16,11 @@ class NewsRepositoryImpl(
         return if (param == Constant.POPULAR) {
             list.sortedBy { it.rank }
         } else {
-            list.sortedBy { it.timeCreated }
+            list.sortedWith(
+                compareBy(
+                    {it.rank}, {it.timeCreated}
+                )
+            )
         }
     }
 }
